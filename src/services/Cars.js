@@ -1,6 +1,4 @@
 import axios from 'axios';
-
-
 export default class CarService {
     constructor() {
         axios.defaults.baseURL = 'http://localhost:3000/api'
@@ -8,6 +6,10 @@ export default class CarService {
 
     getAll() {
         return axios.get('/cars');
+    }
+
+    addCar(car) {
+        return axios.post('/cars', car);
     }
 }
 
