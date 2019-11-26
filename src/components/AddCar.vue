@@ -9,8 +9,7 @@
                 <label>Year:</label>
                 <select v-model = "car.year">
                     <option disabled value="">Select year</option>
-                    <option value="1990">1990</option>
-                    <option value="2019">2019</option>
+                    <option v-for="(year, index) in years" :key="index">{{ year }}</option>
                 </select><br>
                 <label>Max speed:</label>
                 <input v-model.number="car.maxSpeed" type="number"><br>           
@@ -25,7 +24,8 @@
                 <br>
                 <label>Number of doors:</label>
                 <input v-model.number = "car.numberOfDoors" type="number"><br>
-                <input type="button" value="Reset Form" onClick="this.form.reset()"/><br>
+                <input type="button" value="Reset Form" onClick="this.form.reset()"/><br><br>
+                <button @click="previewCar(car)">Preview</button><br><br>
                 <button @click="addNewCar" type="submit">Submit</button>
     </form> 
   </div>
@@ -36,17 +36,28 @@ import { carService } from '../services/Cars'
 export default {
     data() {
      return {
-            car: {}
+            car: {},
+            years: [1,2,3,4]
         }
     },
     methods: {
         addNewCar() {
             this.car.isAutomatic = !!this.car.isAutomatic;
             carService.addCar(this.car).then(() => {
-            this.$router.push('/cars');
-            this.car = {};
-        }); 
-      }
+                this.$router.push('/cars');
+                this.car = {};
+            }); 
+        },
+        previewCar(car) {
+            let displayCar = `Brand: ${car.brand} Model: ${car.model} 
+            Year: ${car.year} Max: ${car.maxSpeed} Automatic: ${car.isAutomatic} 
+            Engine type: ${car.engine} Number of doors: ${car.numberOfDoors}`;
+            alert(displayCar);
+        },
+    },
+
+    created() {
+        this.years = Array(20).fill(1990).map((n, i) => n + i);
     }
     
 }
