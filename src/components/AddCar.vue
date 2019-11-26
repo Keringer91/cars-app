@@ -8,6 +8,7 @@
                 <input v-model = "car.model" type="text" id="model"><br>
                 <label>Year:</label>
                 <select v-model = "car.year">
+                    <option disabled value="">Select year</option>
                     <option value="1990">1990</option>
                     <option value="2019">2019</option>
                 </select><br>
@@ -24,7 +25,8 @@
                 <br>
                 <label>Number of doors:</label>
                 <input v-model.number = "car.numberOfDoors" type="number"><br>
-      <button @click="addNewCar" type="submit">Submit</button>
+                <input type="button" value="Reset Form" onClick="this.form.reset()"/><br>
+                <button @click="addNewCar" type="submit">Submit</button>
     </form> 
   </div>
 </template>
