@@ -7,7 +7,6 @@
 
 <script>
 import AppCars from './components/AppCars.vue'
-
 export default {
   name: 'app',
   components: {
