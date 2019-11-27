@@ -13,13 +13,16 @@ export default class CarService {
     }
 
     getId(id) {
-        return axios.get('/cars/'+id);
+        return axios.get('/cars/' + id);
     }
 
     edit(id, car) {
-        return axios.put('/cars/'+id, car);
+        return axios.put('/cars/' + id, car);
+    }
+
+    delete(id) {
+        return axios.delete('/cars/' + id);
     }
 }
 
-
-export const carService = new  CarService();
+export const carService = new CarService();

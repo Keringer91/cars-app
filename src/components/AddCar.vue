@@ -1,5 +1,5 @@
 <template>
-  <div><br>
+  <div class="add-edit">
     <h5 v-if="$route.name === 'edit'">Edit car ID:{{car.id}}</h5>
     <h5 v-else>Register a new car</h5>
     <p v-if="errors.length">
@@ -109,4 +109,11 @@ export default {
 };
 </script>
 <style>
+    .add-edit {
+        display: inline;
+        text-align: center;
+    }
+    ul {
+        list-style-type: none;
+    }
 </style>
