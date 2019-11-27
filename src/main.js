@@ -12,6 +12,7 @@ const routes = [
   { name: "index", path: "/", redirect: "/cars" },
   { name: "cars", path: "/cars", component: AppCars },
   { name: "add", path: "/add", component: AddCar },
+  { name: "edit", path: "/edit/:id", component: AddCar },
 ]
 
 const router = new VueRouter({
