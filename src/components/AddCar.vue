@@ -1,11 +1,17 @@
 <template>
   <div><br>
     <h5>Add a new post: </h5>
+    <p v-if="errors.length">
+        <b>Please correct the following error(s):</b>
+        <ul  v-for="(error, index) in errors" :key="index">
+            <li>{{ error }}</li>
+        </ul>
+    </p>
     <form @submit.prevent>
                 <label>Brand:</label>
-                <input v-model = "car.brand" type="text" id="brand"><br>
+                <input v-model = "car.brand" type="text" id="brand" :minlength="2"><br>
                 <label>Model:</label>
-                <input v-model = "car.model" type="text" id="model"><br>
+                <input v-model = "car.model" type="text" id="model" :minlength="2"><br>
                 <label>Year:</label>
                 <select v-model = "car.year">
                     <option disabled value="">Select year</option>
@@ -26,7 +32,7 @@
                 <input v-model.number = "car.numberOfDoors" type="number"><br>
                 <input type="button" value="Reset Form" onClick="this.form.reset()"/><br><br>
                 <button @click="previewCar(car)">Preview</button><br><br>
-                <button @click="addNewCar" type="submit">Submit</button>
+                <button @click="checkForm(); addNewCar()" type="submit">Submit</button>
     </form> 
   </div>
 </template>
@@ -37,16 +43,43 @@ export default {
     data() {
      return {
             car: {},
-            years: [1,2,3,4]
+            years: [],
+            errors: []
         }
     },
     methods: {
+        checkForm() {
+        this.errors = [];
+        if (!this.car.brand || (this.car.brand.length < 2 )) {
+            this.errors.push('Brand name is not added or too short.');
+        }
+        if (!this.car.model || (this.car.model.length < 2 )) {
+            this.errors.push('Model name is not added or too short.');
+        }
+        if (!this.car.year ) {
+            this.errors.push('Year of production is required.');
+        }
+        if (!this.car.engine ) {
+            this.errors.push('Engine type is required.');
+        }
+        if (!this.car.numberOfDoors ) {
+            this.errors.push('Number of doors is required.');
+        }
+        
+        if (!this.errors.length) {
+            return true;
+        }
+         console.log(this.errors.length+'test');
+        },
         addNewCar() {
-            this.car.isAutomatic = !!this.car.isAutomatic;
-            carService.addCar(this.car).then(() => {
-                this.$router.push('/cars');
-                this.car = {};
-            }); 
+            if(this.errors.length === 0) {
+                this.car.isAutomatic = !!this.car.isAutomatic;
+                carService.addCar(this.car).then(() => {
+                    this.$router.push('/cars');
+                    this.car = {};
+                }); 
+                
+            }
         },
         previewCar(car) {
             let displayCar = `Brand: ${car.brand} Model: ${car.model} 
@@ -57,7 +90,7 @@ export default {
     },
 
     created() {
-        this.years = Array(20).fill(1990).map((n, i) => n + i);
+        this.years = Array(30).fill(1990).map((n, i) => n + i);
     }
     
 }
